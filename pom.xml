@@ -7,6 +7,28 @@
     <groupId>com.zkteco</groupId>
     <artifactId>ddopen-securtiy</artifactId>
     <version>1.0.0-SNAPSHOT</version>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+    <url>https://github.com/larry0592/ddopen-security</url>
+    <description>Communication security data encryption</description>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>larry0592</name>
+            <email>larry.lv@zkteco.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
     <dependencies>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -29,65 +51,76 @@
 
     <build>
         <plugins>
-            <!-- Do not generate a source jar -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.3</version>
+                <extensions>true</extensions>
                 <configuration>
-                    <skipSource>true</skipSource>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
 
-    <repositories>
-        <!-- 中控内部仓库 -->
-        <repository>
-            <id>central</id>
-            <url>http://mvnrepo.dev.xmzkteco.com:8080/artifactory/repo</url>
-        </repository>
-        <repository>
-            <id>third-party</id>
-            <name>third-party-releases</name>
-            <url>http://mvnrepo.dev.xmzkteco.com:8080/artifactory/third-party</url>
-        </repository>
-        <repository>
-            <id>zkteco-internal-repository</id>
-            <name>zkteco-internal-repository-releases</name>
-            <url>http://mvnrepo.dev.xmzkteco.com:8080/artifactory/zkteco-internal-repository</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-                <checksumPolicy>warn</checksumPolicy>
-            </snapshots>
-        </repository>
-    </repositories>
+    <scm>
+        <connection>scm:git:https://github.com/larry0592/ddopen-security.git</connection>
+        <developerConnection>scm:git:https://github.com/larry0592/ddopen-security.git</developerConnection>
+        <url>https://github.com/larry0592/ddopen-security</url>
+        <tag>v${project.version}</tag>
+    </scm>
+
 
     <distributionManagement>
-        <repository>
-            <id>zkteco-internal-repository</id>
-            <name>zkteco-internal-repository-releases</name>
-            <url>http://mvnrepo.dev.xmzkteco.com:8080/artifactory/zkteco-internal-repository</url>
-        </repository>
         <snapshotRepository>
-            <id>zkteco-internal-repository</id>
-            <name>zkteco-internal-repository-snapshots</name>
-            <url>http://mvnrepo.dev.xmzkteco.com:8080/artifactory/zkteco-internal-repository</url>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <name>Maven Central Staging Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
 </project>
