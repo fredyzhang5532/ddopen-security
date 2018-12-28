@@ -3,7 +3,7 @@
 ### 面向开发者开源
 
  - 开源地址：https://github.com/larry0592/ddopen-security.git
- - deploy命令 ：mvn deploy -Dmaven.javadoc.skip=true -Dgpg.skip
+
 
 ### 使用说明详见 TestMe.java
  
